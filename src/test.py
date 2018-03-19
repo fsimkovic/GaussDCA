@@ -1,16 +1,12 @@
 from __future__ import unicode_literals
 
-import sys
-import os
-
-import numpy
-import numpy as np
-
+import conkit.io
 import h5py
-
 import matplotlib.pyplot as plt
+import numpy as np
+import os
+import sys
 
-from _load_data import load_a3m
 #from _gaussdca import compute_gdca_scores
 from _gaussdca_parallel import compute_gdca_scores
 
@@ -35,7 +31,7 @@ def generate_data(idfile, inpath, outfile):
                     fname = u'%s/%s.fa.%s.2016.a3m' % (inpath , i, ali)
                 if not os.path.isfile(fname):
                     continue
-                a3m_ali = load_a3m(fname)
+                a3m_ali = conkit.io.read(fname, "a3m")
                 print(a3m_ali.shape)
                 gdca_dict = compute_gdca_scores(a3m_ali)
                 gdca = gdca_dict["gdca"]
