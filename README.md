@@ -11,9 +11,9 @@ Runs in Python 3.6
 2. Compile the cython source code: `cd src; python setup.py build_ext -i; cd ..`
 
 ## Usage
-```python gaussdca/gaussdca.py [-h] [-o OUTPUT] [-s SEPARATION] [-t THREADS] alignment_file```
+```python gaussdca/gaussdca.py [-h] [-o OUTPUT] [-t THREADS] alignment_file alignment_format```
 
-So far, the alignment file needs to be in a3m format (with or without insertions). The output will be printed or saved into a file if given. Sequence separation and the number of threads for multiprocessing can be specified.
+So far, the alignment format needs to be specified using one of [ConKit's data formats](http://conkit.org/en/latest/formats.html). The output will be printed or saved into a file if given. The number of threads for multiprocessing can be specified.
 
 ## Performance
 The following chart shows the elapsed runtime in minutes for a large test alignment (test/large.a3m) using 8 cores.
