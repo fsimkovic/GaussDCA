@@ -2,13 +2,13 @@
 from operator import itemgetter
 
 import argparse
-import conkit.core
 import conkit.io
 import numpy
 import numpy as np
 import os
 import sys
 
+from conkit.core import Contact, ContactMap
 #from _gaussdca_parallel import compute_gdca_scores
 from _gaussdca_parallel_opt import compute_gdca_scores
 
@@ -33,10 +33,9 @@ def run_gdca(infile, informat, outfile='', num_threads=1):
 
 
 def to_contact_map(scores):
-    contact_map = conkit.core.ContactMap("1")
-    for coord, value in np.ndenumerate(scores):
-        if coord[0] < coord[1]:
-            contact_map.add(conkit.core.Contact(coord[0] + 1, coord[1] + 1, value))
+    contact_map = ContactMap("1")
+    for coord in zip(*np.triu_indices(scores.shape[-1])):
+        contact_map.add(Contact(int(coord[0] + 1), int(coord[1] + 1), float(scores[coord])))
     contact_map.sort("raw_score", reverse=True, inplace=True)
     return contact_map
 
