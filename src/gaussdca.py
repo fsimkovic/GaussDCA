@@ -9,6 +9,8 @@ import os
 import sys
 
 from conkit.core import Contact, ContactMap
+from conkit.plot import ContactMapMatrixFigure
+
 #from _gaussdca_parallel import compute_gdca_scores
 from _gaussdca_parallel_opt import compute_gdca_scores
 
@@ -31,11 +33,15 @@ def run_gdca(infile, informat, outfile='', num_threads=1):
     else:
         print(cmap.to_string())
 
+    #  fig = ContactMapMatrixFigure(cmap)
+    #  fig.ax.set_aspect(1.0)
+    #  fig.savefig(infile + ".png", dpi=600)
+
 
 def to_contact_map(scores):
     contact_map = ContactMap("1")
     for coord in zip(*np.triu_indices(scores.shape[-1])):
-        contact_map.add(Contact(int(coord[0] + 1), int(coord[1] + 1), float(scores[coord])))
+        contact_map.add(Contact(int(coord[0] + 1), int(coord[1] + 1), scores[coord]))
     contact_map.sort("raw_score", reverse=True, inplace=True)
     return contact_map
 
